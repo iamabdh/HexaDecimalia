@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/big"
 	"os"
 	"strconv"
 )
@@ -24,6 +25,12 @@ func main() {
 
 	} else if args[0] == "-d" {
 		// convert hex to decimal
+		decimal := dec(args[1])
+		if decimal == nil {
+			// handling error
+		} else {
+			fmt.Println(decimal)
+		}
 	}
 }
 
@@ -31,4 +38,12 @@ func main() {
 func hex (deci int) string {
 	hex := strconv.FormatInt(int64(deci), 16)
 	return hex
+}
+
+func dec (hex string) *big.Int {
+	deci := new(big.Int)
+	if _, success := deci.SetString(hex, 16); !success {
+		return nil
+	}
+	return deci
 }
